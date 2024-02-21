@@ -1,10 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 
 from datetime import datetime
+
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    template_name = "home/register.html"
+    success_url = "/smart/notes.html"
 
 class LogoutInterfaceView(LogoutView):
     template_name = "home/logout.html"
