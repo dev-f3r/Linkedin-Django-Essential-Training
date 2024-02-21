@@ -37,14 +37,15 @@ class NotesListView(LoginRequiredMixin, ListView):
     model = Notes
     context_object_name = 'notes'
     template_name = 'notes/notes_list.html'
-    login_url = "/admin"
+    login_url = "/login"
 
     # Override the get_queryset method
     # Now returns all the notes of the logged user
     def get_queryset(self):
         return self.request.user.notes.all()
 
-class NotesDetailView(DetailView):
+class NotesDetailView(LoginRequiredMixin, DetailView):
     model = Notes
     context_object_name = 'note'
     template_name = 'notes/notes_details.html'
+    login_url = "/login"
