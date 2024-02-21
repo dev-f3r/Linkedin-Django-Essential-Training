@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="my-2">These are the notes:</h1>
-<div class="row row-cols3 g-2">
-    {% for note in notes %}
-    <div class="col">
-        <div class="p-3 border">
-            <a href="{% url 'notes.detail' pk=note.id %}" class="text-dark text-decoration-non">
-                <h3>{{ note.title|truncatechars:15 }}</h3>
-            </a>
-            <p>{{ note.text|truncatechars:10 }}</p>
-        </div>
+
+{% if not notes %}
+    <h1 class="my-2">First you must create a note.</h1>
+{% else %}
+    <h1 class="my-2">These are the notes:</h1>
+    <div class="row row-cols-3 g-2">
+        {% for note in notes %}
+            {% if forloop.counter0|divisibleby:3 %}
+                </div><div class="row row-cols-3 g-2">
+            {% endif %}
+            <div class="col mb-2">
+                <div class="p-3 border">
+                    <a href="{% url 'notes.detail' pk=note.id %}" class="text-dark text-decoration-non">
+                        <h3>{{ note.title|truncatechars:15 }}</h3>
+                    </a>
+                    <p>{{ note.text|truncatechars:10 }}</p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+{% endif %}
 
 {% endblock %}
